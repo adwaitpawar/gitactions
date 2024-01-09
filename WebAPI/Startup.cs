@@ -11,6 +11,11 @@ using WebAPI.Repository;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
+using MySql.Data;
+using MySqlConnector.Authentication;
+using MySql.Data.MySqlClient;
+
+
 
 namespace WebAPI
 {
@@ -31,7 +36,9 @@ namespace WebAPI
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IEmployeeAngularRepository, EmployeeAngularRepository>();
 
-            services.AddDbContext<APIDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EmployeeAppCon")));
+            //services.AddDbContext<APIDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EmployeeAppCon")));
+            services.AddDbContext<APIDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("MysqlEmployeeAppCon")));
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSwaggerGen(options =>
